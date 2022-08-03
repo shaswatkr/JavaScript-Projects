@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> Calculator </title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ! - BootStrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+
+    <!-- ! - BootStrap Icons CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+</head>
+
+<body class="container">
+    <div class="card text-center m-4 mx-auto col-5">
+        <div class="card-header display-4"> Calculator </div>
+
+        <div class="card-body">
+            <input id="resultBox" type="number" class="form-control form-control-lg text-end mb-3" />
+
+            <div class="row mb-2">
+                <div class="col">
+                    <button id="btnToReset" class="btn btn-secondary btn-lg"> AC </button>
+                </div>
+                <div class="col">
+                    <button id="btnToChangeSign" class="btn btn-secondary btn-lg">
+                        <i class="bi bi-plus-slash-minus"></i>
+                </div>
+                <div class="col">
+                    <button id="btnToStoreHistory" class="btn btn-secondary btn-lg"> H </button>
+                    </button>
+                </div>
+                <div class="col">
+                    <button id="btnDiv" class="btn btn-warning btn-lg">
+                        <i class="bi bi-slash-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col">
+                    <button class="btn btn-dark btn-lg"> 7 </button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-dark btn-lg"> 8 </button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-dark btn-lg"> 9 </button>
+                </div>
+                <div class="col">
+                    <button id="btnMul" type="button" class="btn btn-warning btn-lg">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col">
+                    <button class="btn btn-dark btn-lg"> 4 </button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-dark btn-lg"> 5 </button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-dark btn-lg"> 6 </button>
+                </div>
+                <div class="col">
+                    <button id="btnSub" type="button" class="btn btn-warning btn-lg"> <i
+                            class="bi bi-dash-lg"></i></button>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col">
+                    <button class="btn btn-dark btn-lg"> 1 </button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-dark btn-lg"> 2 </button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-dark btn-lg"> 3 </button>
+                </div>
+                <div class="col">
+                    <button id="btnAdd" type="button" class="btn btn-warning btn-lg">
+                        <i class="bi bi-plus-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-dark btn-lg" style="width: 100% !important;"> 0 </button>
+                </div>
+                <div class="col">
+                    <button id="btnToTotal" class="btn btn-warning btn-lg" style="width: 100% !important;"> = </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer bg-transparent">
+            <h1 id="total"></h1>
+            <hr />
+
+            <ul id="history" class="list-group list-group-flush">
+            </ul>
+        </div>
+    </div>
+
+    <style>
+        .card {
+            min-width: 390px !important;
+        }
+
+        button {
+            width: 3.5em !important;
+        }
+    </style>
+
+    <script src="./index.js"></script>
+
+</body>
+
+</html>
