@@ -1,0 +1,44 @@
+body {
+    font-weight: bold;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+    background-color: darkgreen;
+    color: aliceblue;
+}
+
+h1 {
+    color: goldenrod;
+}
+
+h2 {
+    font-style: italic;
+}
+
+p {
+    font-size: larger;
+}
+
+span {
+    font-style: italic;
+}
+
+button {
+    cursor: pointer;
+    width: 11%;
+    padding: 1%;
+    margin: 0.2em 0;
+    border-radius: 5%;
+    font-weight: bold;
+    color: darkgreen;
+    background-color: goldenrod;
+}
+
+button:disabled {
+    opacity: 0.5;
+}
+
+footer p {
+    position: fixed;
+    bottom: 1%;
+    right: 45%;
+}
