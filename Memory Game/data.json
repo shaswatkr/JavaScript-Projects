@@ -1,0 +1,26 @@
+[
+    {
+        "name": "cheeseburger",
+        "img": "assets/cheeseburger.png"
+    },
+    {
+        "name": "fries",
+        "img": "assets/fries.png"
+    },
+    {
+        "name": "hotdog",
+        "img": "assets/hotdog.png"
+    },
+    {
+        "name": "ice-cream",
+        "img": "assets/ice-cream.png"
+    },
+    {
+        "name": "milkshake",
+        "img": "assets/milkshake.png"
+    },
+    {
+        "name": "pizza",
+        "img": "assets/pizza.png"
+    }
+]
