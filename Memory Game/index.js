@@ -2,28 +2,58 @@ let result = 0;
 let noOfTries = 0;
 let cardData = [];
 let cardPair = [];
-let currentCardPair = [];
+let currentCardPairId = [];
 
 const resultSpan = document.getElementById("result");
 const noOfTriesSpan = document.getElementById("no-of-tries");
-
-resultSpan.innerText = 0;
-noOfTriesSpan.innerText = 0;
 
 document.getElementById("refresh").addEventListener("click", refreshBoard);
 
 fetch("./data.json")
     .then(res => res.json())
     .then(data => {
-        cardData = [...data.sort(() => 0.5 - Math.random()), ...data.sort(() => 0.5 - Math.random())];
+        cardData = [...data, ...data];
 
-        setBoard();
+        refreshBoard();
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+        console.warn(err);
+
+        const data = [
+            {
+                "name": "cheeseburger",
+                "img": "assets/cheeseburger.png"
+            },
+            {
+                "name": "fries",
+                "img": "assets/fries.png"
+            },
+            {
+                "name": "hotdog",
+                "img": "assets/hotdog.png"
+            },
+            {
+                "name": "ice-cream",
+                "img": "assets/ice-cream.png"
+            },
+            {
+                "name": "milkshake",
+                "img": "assets/milkshake.png"
+            },
+            {
+                "name": "pizza",
+                "img": "assets/pizza.png"
+            }
+        ];
+        cardData = [...data.sort(() => 0.5 - Math.random()), ...data.sort(() => 0.5 - Math.random())].sort(() => 0.5 - Math.random());
+
+        refreshBoard();
+    });
 
 function refreshBoard() {
     setBoard();
 
+    cardData.sort(() => 0.5 - Math.random());
     resultSpan.innerText = 0;
     noOfTriesSpan.innerText = 0;
 }
@@ -49,32 +79,39 @@ function flipCard() {
     this.setAttribute("src", cardData[id].img);
 
     cardPair.push(cardData[id].name);
-    currentCardPair.push(id);
+    currentCardPairId.push(id);
 
     if (cardPair.length === 2) {
-        if (cardPair[0] === cardPair[1]) {
-            result++;
-            resultSpan.innerText = result;
-            noOfTries++;
-            noOfTriesSpan.innerText = noOfTries;
+        checkFlippedPair();
+    }
+}
 
-            cardPair = [];
-            currentCardPair = []
-        }
-        else {
-            noOfTries++;
-            noOfTriesSpan.innerText = noOfTries;
+function checkFlippedPair() {
+    const cards = document.querySelectorAll(".card");
 
-            setTimeout(() => {
-                const cards = document.querySelectorAll(".card");
+    if (cardPair[0] === cardPair[1]) {
+        resultSpan.innerText = ++result;
 
-                currentCardPair.forEach(each => {
-                    cards[each].setAttribute("src", "./assets/blank.png");
-                });
+        currentCardPairId.forEach(eachId => {
+            cards[eachId].removeEventListener("click", flipCard);
+        });
 
-                cardPair = [];
-                currentCardPair = [];
-            }, 1000);
+        currentCardPairId = [];
+
+        if (result === 6) {
+            resultSpan.innerText = "Yo Ho! You won the game.";
         }
     }
+    else {
+        setTimeout(() => {
+            currentCardPairId.forEach(eachId => {
+                cards[eachId].setAttribute("src", "./assets/blank.png");
+            });
+
+            currentCardPairId = [];
+        }, 500);
+    }
+
+    cardPair = [];
+    noOfTriesSpan.innerText = ++noOfTries;
 }
