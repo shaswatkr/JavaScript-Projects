@@ -109,7 +109,7 @@ function checkFlippedPair() {
             });
 
             currentCardPairId = [];
-        }, 1000);
+        }, 500);
     }
 
     cardPair = [];
