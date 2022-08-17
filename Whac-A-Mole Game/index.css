@@ -1,0 +1,17 @@
+#grid {
+    height: 606px;
+    width: 606px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.square {
+    height: 200px;
+    width: 200px;
+    border: 1px solid black;
+}
+
+.mole {
+    background-image: url(./assets/mole.jpeg);
+    background-size: cover;
+}
