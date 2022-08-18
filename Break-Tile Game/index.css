@@ -1,0 +1,14 @@
+#grid {
+    position: absolute;
+    border: 1px solid black;
+}
+
+.brick {
+    position: absolute;
+    background-color: red;
+}
+
+.user_tile {
+    position: absolute;
+    background-color: purple;
+}
