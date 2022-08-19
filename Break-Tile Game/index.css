@@ -12,3 +12,9 @@
     position: absolute;
     background-color: purple;
 }
+
+.ball {
+    position: absolute;
+    border-radius: 100%;
+    background-color: goldenrod;
+}
