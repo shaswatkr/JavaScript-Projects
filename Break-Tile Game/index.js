@@ -6,14 +6,19 @@ const BALL_HEIGHT = 20;
 const BALL_WIDTH = 20;
 const GUTTER = 10;
 const NO_OF_BRICKS = 15;
-const USER_BRICK_MOVEMENT = 15;
+const USER_BRICK_MOVEMENT_SPEED = 15;
+const BALL_MOVEMENT_SPEED = 3;
 
 let score = 0;
 let bricksArray = [];
-let ball = null;
-let userBrick = null;
-const grid = document.getElementById("grid");
+let ballMovementTimer = null;
+let ballDiv = null;
+let userBrickDiv = null;
+let brickDivs = null;
+
+const gridDiv = document.getElementById("grid");
 const scoreSpan = document.getElementById("score");
+const stateOfGameSpan = document.getElementById("state_of_game");
 
 let orgUserBrickPos = {
     x: BOARD_WIDTH / 2 - BRICK_WIDTH / 2,
@@ -27,15 +32,23 @@ let orgBallPos = {
 }
 let currentBallPos = {};
 
-document.getElementById("reset_board").addEventListener("click", designBoard);
-document.addEventListener("keydown", moveUserBrick);
+let orgBallMovement = {
+    x: BALL_MOVEMENT_SPEED,
+    y: BALL_MOVEMENT_SPEED
+};
+let currentBallMovement = {};
+
+document.getElementById("reset_board").addEventListener("click", () => {
+    location.reload();
+    designBoard();
+});
 
 class Brick {
     constructor(x, y) {
-        this.leftBottom = { x, y };
-        this.rightBottom = { x, y: y + BRICK_WIDTH };
-        this.leftTop = { x: x + BOARD_HEIGHT, y };
-        this.rightTop = { x: x + BOARD_HEIGHT, y: y + BRICK_WIDTH };
+        this.left = x;
+        this.right = x + BRICK_WIDTH;
+        this.bottom = y;
+        this.top = y + BOARD_HEIGHT;
     }
 }
 
@@ -43,10 +56,11 @@ function designBoard() {
     // ! - Reset Score
     score = 0;
     scoreSpan.innerText = score;
+    stateOfGameSpan.innerText = "PLAYING";
 
     // ! - Draw board
-    grid.style.height = BOARD_HEIGHT + "px";
-    grid.style.width = BOARD_WIDTH + "px";
+    gridDiv.style.height = BOARD_HEIGHT + "px";
+    gridDiv.style.width = BOARD_WIDTH + "px";
 
     // ! - Draw Bricks
     let posX = GUTTER;
@@ -65,20 +79,28 @@ function designBoard() {
 
         posX += BRICK_WIDTH + GUTTER;
     }
+    brickDivs = document.querySelectorAll(".brick");
 
     // ! - Draw User's Tile
     currentUserBrickPos = orgUserBrickPos;
 
-    userBrick = document.createElement("div");
-    userBrick.className = "user_tile";
-    drawBrick(userBrick, currentUserBrickPos.x, currentUserBrickPos.y);
+    userBrickDiv = document.createElement("div");
+    userBrickDiv.className = "user_tile";
+    drawBrick(userBrickDiv, currentUserBrickPos.x, currentUserBrickPos.y);
+
+    // ! - Attach Event Listener to User's Tile
+    document.addEventListener("keydown", moveUserBrick);
 
     // ! - Draw the Ball
     currentBallPos = orgBallPos;
 
-    ball = document.createElement("div");
-    ball.className = "ball";
+    ballDiv = document.createElement("div");
+    ballDiv.className = "ball";
     drawBall();
+
+    // ! - Move The Ball
+    currentBallMovement = orgBallMovement;
+    ballMovementTimer = setInterval(moveBall, 30);
 }
 designBoard();
 
@@ -88,32 +110,88 @@ function drawBrick(obj, x, y) {
     obj.style.left = x + "px";
     obj.style.bottom = y + "px";
 
-    grid.appendChild(obj);
+    gridDiv.appendChild(obj);
 }
 
 function drawBall() {
-    ball.style.height = BALL_HEIGHT + "px";
-    ball.style.width = BALL_WIDTH + "px";
-    ball.style.left = currentBallPos.x + "px";
-    ball.style.bottom = currentBallPos.y + "px";
+    ballDiv.style.height = BALL_HEIGHT + "px";
+    ballDiv.style.width = BALL_WIDTH + "px";
+    ballDiv.style.left = currentBallPos.x + "px";
+    ballDiv.style.bottom = currentBallPos.y + "px";
 
-    grid.appendChild(ball);
+    gridDiv.appendChild(ballDiv);
 }
 
 function moveUserBrick(e) {
     switch (e.key) {
         case "ArrowLeft": {
             if (currentUserBrickPos.x >= 8) {
-                currentUserBrickPos.x -= USER_BRICK_MOVEMENT;
-                drawBrick(userBrick, currentUserBrickPos.x, currentUserBrickPos.y);
+                currentUserBrickPos.x -= USER_BRICK_MOVEMENT_SPEED;
+                drawBrick(userBrickDiv, currentUserBrickPos.x, currentUserBrickPos.y);
             }
             break;
         }
         case "ArrowRight": {
             if (currentUserBrickPos.x <= BOARD_WIDTH - BRICK_WIDTH - 8)
-                currentUserBrickPos.x += USER_BRICK_MOVEMENT;
-            drawBrick(userBrick, currentUserBrickPos.x, currentUserBrickPos.y);
+                currentUserBrickPos.x += USER_BRICK_MOVEMENT_SPEED;
+            drawBrick(userBrickDiv, currentUserBrickPos.x, currentUserBrickPos.y);
         }
     }
 }
 
+function moveBall() {
+    currentBallPos.x += currentBallMovement.x;
+    currentBallPos.y += currentBallMovement.y;
+
+    checkBallCollision();
+
+    drawBall();
+}
+
+function checkBallCollision() {
+    // ! Check if Brick is Hit
+    for (let i = 0; i < bricksArray.length; i++) {
+        if (bricksArray[i] &&
+            ((currentBallPos.x + BALL_WIDTH / 2) >= bricksArray[i].left && (currentBallPos.x + BALL_WIDTH / 2) <= bricksArray[i].right) &&
+            ((currentBallPos.y + BALL_HEIGHT) >= bricksArray[i].bottom && (currentBallPos.y + BALL_HEIGHT) <= bricksArray[i].top)
+        ) {
+            brickDivs[i].classList.remove("brick");
+            currentBallMovement.y = -currentBallMovement.y;
+            bricksArray[i] = undefined;
+            scoreSpan.innerText = ++score;
+            break;
+        }
+    }
+    if (score === NO_OF_BRICKS) {
+        clearInterval(ballMovementTimer);
+        document.removeEventListener("keydown", moveUserBrick);
+        stateOfGameSpan.innerText = "YOU WON!!";
+    }
+
+    // ! Check if User's Tile is Hit
+    if (
+        ((currentBallPos.x + BALL_WIDTH / 2) >= currentUserBrickPos.x && (currentBallPos.x + BALL_WIDTH / 2) <= currentUserBrickPos.x + BRICK_WIDTH) &&
+        (currentBallPos.y >= currentUserBrickPos.y && currentBallPos.y <= (currentUserBrickPos.y + BRICK_HEIGHT))
+    ) {
+        currentBallMovement.y = -currentBallMovement.y;
+    }
+
+    // ! - Check left & right boundry of the board is Hit
+    if (currentBallPos.x <= 0 || (currentBallPos.x + BALL_WIDTH) >= BOARD_WIDTH) {
+        currentBallMovement.x = -currentBallMovement.x;
+        for (let i = 0; i < 1000; i++) { }
+    }
+
+    // ! - Check top boundary of the board is Hit
+    if ((currentBallPos.y + BALL_HEIGHT) >= BOARD_HEIGHT) {
+        currentBallMovement.y = -currentBallMovement.y;
+    }
+
+    // ! - Check bottom boundary of the board is Hit
+    if (currentBallPos.y <= 0) {
+        currentBallPos.y = 0;
+        clearInterval(ballMovementTimer);
+        document.removeEventListener("keydown", moveUserBrick);
+        stateOfGameSpan.innerText = "GAME OVER";
+    }
+}
