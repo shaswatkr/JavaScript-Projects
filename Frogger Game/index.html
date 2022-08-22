@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> Frogger - Game </title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <h1> Time Left: <span id="time_left_span"> 60 </span> </h1>
+    <h2> State of Game: <span id="state_of_game_span"> Not Started! </span> </h2>
+
+    <button id="stat_pause_button"> Start/Pause</button>
+    <br /> <br />
+
+    <div class="grid">
+        <!-- ! - Finish Line -->
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div class="end_game_div"></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+
+        <!-- ! - River -->
+        <div class="log_left_div"></div>
+        <div class="log_left_div"></div>
+        <div class="log_left_div"></div>
+        <div class="log_left_div"></div>
+        <div class="log_left_div"></div>
+        <div class="log_left_div"></div>
+        <div class="log_left_div"></div>
+        <div class="log_left_div"></div>
+        <div class="log_left_div"></div>
+
+        <div class="log_right_div"></div>
+        <div class="log_right_div"></div>
+        <div class="log_right_div"></div>
+        <div class="log_right_div"></div>
+        <div class="log_right_div"></div>
+        <div class="log_right_div"></div>
+        <div class="log_right_div"></div>
+        <div class="log_right_div"></div>
+        <div class="log_right_div"></div>
+
+        <!-- !- Safe -->
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+
+        <!-- ! - Road -->
+        <div class="car_left_div"></div>
+        <div class="car_left_div"></div>
+        <div class="car_left_div"></div>
+        <div class="car_left_div"></div>
+        <div class="car_left_div"></div>
+        <div class="car_left_div"></div>
+        <div class="car_left_div"></div>
+        <div class="car_left_div"></div>
+        <div class="car_left_div"></div>
+
+        <div class="car_right_div"></div>
+        <div class="car_right_div"></div>
+        <div class="car_right_div"></div>
+        <div class="car_right_div"></div>
+        <div class="car_right_div"></div>
+        <div class="car_right_div"></div>
+        <div class="car_right_div"></div>
+        <div class="car_right_div"></div>
+        <div class="car_right_div"></div>
+
+        <!-- ! - Start Line -->
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div class="start_game_div"></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
