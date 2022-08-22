@@ -1,0 +1,31 @@
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    height: 648px;
+    width: 648px;
+    border: 1px solid black;
+}
+
+.grid div {
+    height: 70px;
+    width: 70px;
+    border: 1px solid lightgray;
+}
+
+.end_game_div {
+    background-color: goldenrod;
+}
+
+.log_left_div,
+.log_right_div {
+    background-color: lightblue;
+}
+
+.car_left_div,
+.car_right_div {
+    background-color: gray;
+}
+
+.start_game_div {
+    background-color: lightsalmon;
+}
