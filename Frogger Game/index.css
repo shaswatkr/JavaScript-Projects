@@ -16,17 +16,12 @@
     background-color: goldenrod;
 }
 
-.car_left_div,
-.car_right_div {
-    background-color: gray;
-}
-
 .start_game_div {
     background-color: lightsalmon;
 }
 
 .frog {
-    background-color: green;
+    background-color: green !important;
 }
 
 .l1,
@@ -38,4 +33,14 @@
 .l4,
 .l5 {
     background-color: lightblue;
+}
+
+.c1,
+.c2 {
+    background-color: lightyellow;
+}
+
+.c3,
+.c4 {
+    background-color: gray;
 }
