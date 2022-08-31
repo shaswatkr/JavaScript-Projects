@@ -1,13 +1,17 @@
 const HEIGHT = 9;
 const WIDTH = 9;
 
-let timeLeft = 60;
+let timeLeft = 20;
 let stateOfGame = null;
 let currentFrogSquareIndex = 76;
 let autoMoveElementsTimer = null;
+let gameWinLoseLogicTimer = null;
 
 const squaresDiv = document.querySelectorAll(".grid div");
-document.addEventListener("keydown", moveFrog);
+const stateOfGameSpan = document.getElementById("state_of_game_span");
+
+document.getElementById("reset_button").addEventListener("click", resetBoard);
+document.getElementById("start_pause_button").addEventListener("click", startPauseGame);
 
 function moveFrog(e) {
     squaresDiv[currentFrogSquareIndex].classList.remove("frog");
@@ -44,6 +48,8 @@ function autoMoveElements() {
 
     carsLeftDiv.forEach(carLeft => moveCars(carLeft, "left"));
     carRightDiv.forEach(carRight => moveCars(carRight, "right"));
+
+    document.getElementById("time_left_span").innerText = --timeLeft;
 }
 
 function moveLogs(log, direction) {
@@ -158,4 +164,58 @@ function moveCars(car, direction) {
     }
 }
 
-autoMoveElementsTimer = setInterval(autoMoveElements, 1000);
+function resetBoard() {
+    clearInterval(autoMoveElementsTimer);
+    clearInterval(gameWinLoseLogicTimer);
+    autoMoveElementsTimer = null;
+
+    timeLeft = 20;
+    document.getElementById("time_left_span").innerText = timeLeft;
+    stateOfGameSpan.innerText = "NOT STARTED";
+
+    squaresDiv[currentFrogSquareIndex].classList.remove("frog");
+    currentFrogSquareIndex = 76;
+    squaresDiv[currentFrogSquareIndex].classList.add("frog");
+}
+
+function startPauseGame() {
+    if (autoMoveElementsTimer) {
+        clearInterval(autoMoveElementsTimer);
+        clearInterval(gameWinLoseLogicTimer);
+        autoMoveElementsTimer = null;
+        document.removeEventListener("keydown", moveFrog);
+        stateOfGameSpan.innerText = "PAUSED";
+    }
+    else {
+        autoMoveElementsTimer = setInterval(autoMoveElements, 1000);
+        gameWinLoseLogicTimer = setInterval(gameWinLoseLogic, 100);
+        document.addEventListener("keydown", moveFrog);
+        stateOfGameSpan.innerText = "RUNNING";
+    }
+}
+
+function gameWinLoseLogic() {
+    // ! - Conditions when User will LOSE the Game
+    if (
+        timeLeft <= 0 ||
+        squaresDiv[currentFrogSquareIndex].classList.contains("l4") ||
+        squaresDiv[currentFrogSquareIndex].classList.contains("l5") ||
+        squaresDiv[currentFrogSquareIndex].classList.contains("c1") ||
+        squaresDiv[currentFrogSquareIndex].classList.contains("c2")
+    ) {
+        clearInterval(autoMoveElementsTimer);
+        clearInterval(gameWinLoseLogicTimer);
+        autoMoveElementsTimer = null;
+        document.removeEventListener("keydown", moveFrog);
+        stateOfGameSpan.innerText = "YOU LOST";
+    }
+
+    // ! - Condition when User will WIN the Game
+    if (squaresDiv[currentFrogSquareIndex].classList.contains("end_game_div")) {
+        clearInterval(autoMoveElementsTimer);
+        clearInterval(gameWinLoseLogicTimer);
+        autoMoveElementsTimer = null;
+        document.removeEventListener("keydown", moveFrog);
+        stateOfGameSpan.innerText = "YOU WON!!";
+    }
+}
