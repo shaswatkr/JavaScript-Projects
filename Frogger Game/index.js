@@ -188,7 +188,7 @@ function startPauseGame() {
     }
     else {
         autoMoveElementsTimer = setInterval(autoMoveElements, 1000);
-        gameWinLoseLogicTimer = setInterval(gameWinLoseLogic, 100);
+        gameWinLoseLogicTimer = setInterval(gameWinLoseLogic, 50);
         document.addEventListener("keydown", moveFrog);
         stateOfGameSpan.innerText = "RUNNING";
     }
