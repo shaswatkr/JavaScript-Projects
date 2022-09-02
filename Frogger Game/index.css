@@ -1,0 +1,46 @@
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    height: 648px;
+    width: 648px;
+    border: 1px solid black;
+}
+
+.grid div {
+    height: 70px;
+    width: 70px;
+    border: 1px solid lightgray;
+}
+
+.end_game_div {
+    background-color: goldenrod;
+}
+
+.start_game_div {
+    background-color: lightsalmon;
+}
+
+.frog {
+    background-color: green !important;
+}
+
+.l1,
+.l2,
+.l3 {
+    background-color: #966F33;
+}
+
+.l4,
+.l5 {
+    background-color: lightblue;
+}
+
+.c1,
+.c2 {
+    background-color: lightyellow;
+}
+
+.c3,
+.c4 {
+    background-color: gray;
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> Frogger - Game </title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <h1> Time Left: <span id="time_left_span"> 20 </span> </h1>
+    <h2> State of Game: <span id="state_of_game_span"> NOT STARTED </span> </h2>
+
+    <button id="start_pause_button"> Start/Pause </button>
+
+    <button id="reset_button"> Reset Board</button>
+    <br /> <br />
+
+    <div class="grid">
+        <!-- ! - Finish Line -->
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div class="end_game_div"></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+
+        <!-- ! - River -->
+        <div class="log_left_div l1"></div>
+        <div class="log_left_div l2"></div>
+        <div class="log_left_div l3"></div>
+        <div class="log_left_div l4"></div>
+        <div class="log_left_div l5"></div>
+        <div class="log_left_div l1"></div>
+        <div class="log_left_div l2"></div>
+        <div class="log_left_div l3"></div>
+        <div class="log_left_div l4"></div>
+
+        <div class="log_right_div l5"></div>
+        <div class="log_right_div l1"></div>
+        <div class="log_right_div l2"></div>
+        <div class="log_right_div l3"></div>
+        <div class="log_right_div l4"></div>
+        <div class="log_right_div l5"></div>
+        <div class="log_right_div l1"></div>
+        <div class="log_right_div l2"></div>
+        <div class="log_right_div l3"></div>
+
+        <!-- !- Safe -->
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+
+        <!-- ! - Road -->
+        <div class="car_left_div c1"></div>
+        <div class="car_left_div c2"></div>
+        <div class="car_left_div c3"></div>
+        <div class="car_left_div c4"></div>
+        <div class="car_left_div c1"></div>
+        <div class="car_left_div c2"></div>
+        <div class="car_left_div c3"></div>
+        <div class="car_left_div c4"></div>
+        <div class="car_left_div c1"></div>
+
+        <div class="car_right_div c2"></div>
+        <div class="car_right_div c3"></div>
+        <div class="car_right_div c4"></div>
+        <div class="car_right_div c1"></div>
+        <div class="car_right_div c2"></div>
+        <div class="car_right_div c3"></div>
+        <div class="car_right_div c4"></div>
+        <div class="car_right_div c1"></div>
+        <div class="car_right_div c2"></div>
+
+        <!-- ! - Start Line -->
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div class="start_game_div frog"></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
