@@ -9,7 +9,7 @@ function createBoard() {
         squareNewDiv.addEventListener("click", addPlayerPiece);
 
         if (i >= 42) {
-            squareNewDiv.className = "taken";
+            squareNewDiv.classList = "taken hidden";
         }
 
         gridDiv.appendChild(squareNewDiv);
@@ -44,6 +44,7 @@ function addPlayerPiece(e) {
             currentPlayerSpan.innerText = currentPlayer;
         }
         else {
+            squaresDiv.forEach(each => each.removeEventListener("click", addPlayerPiece));
             document.getElementById("result").innerText = `Player ${currentPlayer} WINS!!`;
         }
     }
