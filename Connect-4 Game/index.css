@@ -13,6 +13,10 @@
     border: 0.05em solid lightgray;
 }
 
+.hidden {
+    border: none !important;
+}
+
 .player_one {
     border-radius: 100%;
     background-color: coral;
