@@ -43,6 +43,10 @@ function addPlayerPiece(e) {
             currentPlayer = currentPlayer === 1 ? 2 : 1;
             currentPlayerSpan.innerText = currentPlayer;
         }
+        else if (result === "No more moves left!") {
+            squaresDiv.forEach(each => each.removeEventListener("click", addPlayerPiece));
+            document.getElementById("result").innerText = result;
+        }
         else {
             squaresDiv.forEach(each => each.removeEventListener("click", addPlayerPiece));
             document.getElementById("result").innerText = `Player ${currentPlayer} WINS!!`;
@@ -159,6 +163,19 @@ function gameWinLogic(squareId, player) {
             return "5";
         }
     }
+
+    let count = 0;
+    for (let i = 0; i < 42; i++) {
+        if (squaresDiv[i].classList.contains("taken")) {
+            count++;
+        }
+    }
+    if (count === 41) {
+        return "No more moves left!";
+    }
+    // if (squaresDiv.every(each => each.classList.contains("taken"))) {
+    //     return "No more moves left!";
+    // }
 
     return false;
 }
