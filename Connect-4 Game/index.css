@@ -13,12 +13,12 @@
     border: 0.05em solid lightgray;
 }
 
-#player_one {
+.player_one {
     border-radius: 100%;
     background-color: coral;
 }
 
-#player_two {
+.player_two {
     border-radius: 100%;
     background-color: yellowgreen;
 }
