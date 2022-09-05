@@ -1,0 +1,28 @@
+#grid {
+    display: flex;
+    flex-wrap: wrap;
+    height: 42.6em;
+    width: 49.7em;
+    border: 1px solid black;
+    margin-bottom: 10%;
+}
+
+#grid div {
+    height: 7em;
+    width: 7em;
+    border: 0.05em solid lightgray;
+}
+
+.hidden {
+    border: none !important;
+}
+
+.player_one {
+    border-radius: 100%;
+    background-color: coral;
+}
+
+.player_two {
+    border-radius: 100%;
+    background-color: yellowgreen;
+}
