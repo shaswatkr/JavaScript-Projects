@@ -1,0 +1,22 @@
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    height: 45em;
+    width: 45em;
+    border: 1px solid black;
+    margin-bottom: 10%;
+}
+
+.square {
+    height: 3em;
+    width: 3em;
+}
+
+.invader {
+    background-color: purple;
+    border-radius: 100%;
+}
+
+.playerShooter {
+    background-color: coral;
+}
