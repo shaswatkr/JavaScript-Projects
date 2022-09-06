@@ -8,6 +8,7 @@ let spaceInvadersArray = [
 const spaceInvadersArrayLength = spaceInvadersArray.length;
 
 let direction = 1;
+let gameLostFlag = false;
 let squaresDiv = null;
 let moveSpaceInvadersTimer = null;
 
@@ -73,16 +74,25 @@ function moveSpaceInvaders() {
 
     deleteSpaceInvaders();
 
-    if (rightReached && direction > 0) {
-        direction = -direction;
-        spaceInvadersArray = spaceInvadersArray.map(each => each + WIDTH);
+    for (let i = 0; i < spaceInvadersArrayLength; i++) {
+        if (spaceInvadersArray[i] === currentPlayerShooterPosition) {
+            gameLostFlag = true;
+            clearInterval(moveSpaceInvadersTimer);
+        }
     }
-    else if (leftReached && direction < 0) {
-        direction = -direction;
-        spaceInvadersArray = spaceInvadersArray.map(each => each + WIDTH);
-    }
-    else {
-        spaceInvadersArray = spaceInvadersArray.map(each => each + direction);
+
+    if (!gameLostFlag) {
+        if (rightReached && direction > 0) {
+            direction = -direction;
+            spaceInvadersArray = spaceInvadersArray.map(each => each + WIDTH);
+        }
+        else if (leftReached && direction < 0) {
+            direction = -direction;
+            spaceInvadersArray = spaceInvadersArray.map(each => each + WIDTH);
+        }
+        else {
+            spaceInvadersArray = spaceInvadersArray.map(each => each + direction);
+        }
     }
 
     drawSpaceInvaders();
