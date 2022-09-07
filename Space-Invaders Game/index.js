@@ -9,12 +9,15 @@ const spaceInvadersArrayLength = spaceInvadersArray.length;
 
 let destroyedSpaceInvadersArray = [];
 
+let score = 0;
 let direction = 1;
 let gameOverFlag = false;
-let squaresDiv = null;
 let moveSpaceInvadersTimer = null;
 
 let currentPlayerShooterPosition = 202;
+
+let squaresDiv = null;
+const scoreSpan = document.getElementById("score");
 
 function drawSpaceInvaders() {
     spaceInvadersArray.forEach((each, index) => destroyedSpaceInvadersArray.includes(index) ? null : squaresDiv[each].classList.add("invader"));
@@ -66,6 +69,7 @@ function shoot(e) {
             clearInterval(drawLaserTimer);
         }
         else if (squaresDiv[currentLaserPosition].classList.contains("invader")) {
+            scoreSpan.innerText = ++score;
             destroyedSpaceInvadersArray.push(spaceInvadersArray.indexOf(currentLaserPosition));
 
             squaresDiv[currentLaserPosition].classList.remove("invader");
@@ -107,8 +111,9 @@ function moveSpaceInvaders() {
     if (destroyedSpaceInvadersArray.length === spaceInvadersArrayLength) {
         gameOverFlag = true;
         clearInterval(moveSpaceInvadersTimer);
-        document.querySelector("h1").innerText = "YOU WON!!";
+        document.querySelector("h1").innerText = `YOU WON!! Score = ${score}`;
         document.removeEventListener("keydown", movePlayerShooter);
+        document.removeEventListener("keydown", shoot);
     }
 
     deleteSpaceInvaders();
@@ -119,6 +124,7 @@ function moveSpaceInvaders() {
             clearInterval(moveSpaceInvadersTimer);
             document.querySelector("h1").innerText = "GAME OVER!";
             document.removeEventListener("keydown", movePlayerShooter);
+            document.removeEventListener("keydown", shoot);
         }
     });
 
