@@ -20,3 +20,12 @@
 .playerShooter {
     background-color: coral;
 }
+
+.laser {
+    background-color: red;
+}
+
+.boom {
+    background-color: gray;
+    border-radius: 0;
+}
