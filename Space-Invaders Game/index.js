@@ -7,26 +7,28 @@ let spaceInvadersArray = [
 ];
 const spaceInvadersArrayLength = spaceInvadersArray.length;
 
+let destroyedSpaceInvadersArray = [];
+
 let direction = 1;
-let gameLostFlag = false;
+let gameOverFlag = false;
 let squaresDiv = null;
 let moveSpaceInvadersTimer = null;
 
 let currentPlayerShooterPosition = 202;
 
 function drawSpaceInvaders() {
-    spaceInvadersArray.forEach(each => squaresDiv[each].classList.add("invader"));
+    spaceInvadersArray.forEach((each, index) => destroyedSpaceInvadersArray.includes(index) ? null : squaresDiv[each].classList.add("invader"));
 }
 
 function deleteSpaceInvaders() {
     spaceInvadersArray.forEach(each => squaresDiv[each].classList.remove("invader"));
 }
 
-function leftBorderReachedFor(element) {
+function leftBorderReached(element) {
     return element % WIDTH === 0;
 }
 
-function rightBorderReachedFor(element) {
+function rightBorderReached(element) {
     return element % WIDTH === WIDTH - 1;
 }
 
@@ -52,16 +54,49 @@ function drawBoard() {
 }
 drawBoard();
 
+function shoot(e) {
+    let drawLaserTimer = null;
+    let currentLaserPosition = null;
+
+    function drawLaser() {
+        squaresDiv[currentLaserPosition].classList.remove("laser");
+        currentLaserPosition -= WIDTH;
+
+        if (currentLaserPosition <= 0) {
+            clearInterval(drawLaserTimer);
+        }
+        else if (squaresDiv[currentLaserPosition].classList.contains("invader")) {
+            destroyedSpaceInvadersArray.push(spaceInvadersArray.indexOf(currentLaserPosition));
+
+            squaresDiv[currentLaserPosition].classList.remove("invader");
+            squaresDiv[currentLaserPosition].classList.add("boom");
+
+            setTimeout(() => squaresDiv[currentLaserPosition].classList.remove("boom"), 200);
+            clearInterval(drawLaserTimer);
+        }
+        else {
+            squaresDiv[currentLaserPosition].classList.add("laser");
+        }
+    }
+
+    if (e.key === "ArrowUp") {
+        currentLaserPosition = currentPlayerShooterPosition;
+        drawLaserTimer = setInterval(drawLaser, 30);
+    }
+
+}
+document.addEventListener("keydown", shoot);
+
 function movePlayerShooter(e) {
     squaresDiv[currentPlayerShooterPosition].classList.remove("playerShooter");
 
     switch (e.key) {
         case "ArrowLeft": {
-            leftBorderReachedFor(currentPlayerShooterPosition) ? null : currentPlayerShooterPosition--;
+            leftBorderReached(currentPlayerShooterPosition) ? null : currentPlayerShooterPosition--;
             break;
         }
         case "ArrowRight": {
-            rightBorderReachedFor(currentPlayerShooterPosition) ? null : currentPlayerShooterPosition++;
+            rightBorderReached(currentPlayerShooterPosition) ? null : currentPlayerShooterPosition++;
             break;
         }
     }
@@ -69,19 +104,28 @@ function movePlayerShooter(e) {
 }
 
 function moveSpaceInvaders() {
-    const leftReached = leftBorderReachedFor(spaceInvadersArray[0]);
-    const rightReached = rightBorderReachedFor(spaceInvadersArray[spaceInvadersArrayLength - 1]);
+    if (destroyedSpaceInvadersArray.length === spaceInvadersArrayLength) {
+        gameOverFlag = true;
+        clearInterval(moveSpaceInvadersTimer);
+        document.querySelector("h1").innerText = "YOU WON!!";
+        document.removeEventListener("keydown", movePlayerShooter);
+    }
 
     deleteSpaceInvaders();
 
-    for (let i = 0; i < spaceInvadersArrayLength; i++) {
-        if (spaceInvadersArray[i] === currentPlayerShooterPosition) {
-            gameLostFlag = true;
+    spaceInvadersArray.forEach(each => {
+        if (each === currentPlayerShooterPosition) {
+            gameOverFlag = true;
             clearInterval(moveSpaceInvadersTimer);
+            document.querySelector("h1").innerText = "GAME OVER!";
+            document.removeEventListener("keydown", movePlayerShooter);
         }
-    }
+    });
 
-    if (!gameLostFlag) {
+    if (!gameOverFlag) {
+        const leftReached = leftBorderReached(spaceInvadersArray[0]);
+        const rightReached = rightBorderReached(spaceInvadersArray[spaceInvadersArray.length - 1]);
+
         if (rightReached && direction > 0) {
             direction = -direction;
             spaceInvadersArray = spaceInvadersArray.map(each => each + WIDTH);
